@@ -16,16 +16,16 @@ class Facts(db.Model):
 
    # Define the User schema with "vars" from object
    id = db.Column(db.Integer, primary_key=True)
-   _car = db.Column(db.String(255), unique=True, nullable=False)
+   stock = db.Column(db.String(255), unique=True, nullable=False)
    _industry = db.Column(db.String(255), unique=False, nullable=False)
   
    # Defines a relationship between User record and Notes table, one-to-many (one user to many notes)
    # constructor of a User object, initializes the instance variables within object (self)
-   def __init__(self, car, industry):
+   def __init__(self, stock, industry):
 
 
        self._industry = industry   # variables with self prefix become part of the object,
-       self._car = car
+       self.stock = stock
 
 
    @property
@@ -42,13 +42,13 @@ class Facts(db.Model):
 
 
    @property
-   def car(self):
-       return self._car
+   def stock(self):
+       return self.stock
   
    # a setter function, allows industry to be updated after initial object creation
-   @car.setter
-   def car(self, car):
-       self._car = car
+   @stock.setter
+   def stock(self, stock):
+       self.stock = stock
 
 
    def __str__(self):
@@ -72,19 +72,19 @@ class Facts(db.Model):
        return {
            "id": self.id,
            "industry": self.industry,
-           "car": self.car,
+           "stock": self.stock,
           
        }
 
 
    # CRUD update: updates user industry, knew, phone
    # returns self
-   def update(self, industry="", car=""):
+   def update(self, industry="", stock=""):
        """only updates values with length"""
        if len(industry) > 0:
            self.industry = industry
-       if len(car) > 0:
-           self.car = car
+       if len(stock) > 0:
+           self.stock = stock
        db.session.commit()
        return self
 
@@ -106,11 +106,11 @@ def initFacts():
        """Create database and tables"""
        db.create_all()
        """Tester data for table"""
-       u1 = Facts( industry='Creates your technology products, especially your cell phones', car='Apple', )
-       u2 = Facts( industry='Creates computers, laptop software, and other products', car='Microsoft', )
-       u3 = Facts( industry='Creates electric cars', car='Tesla', )
-       u4 = Facts( industry='Creates American cars', car='Ford', )
-       u5 = Facts( industry='Creates movies', car='Disney', )
+       u1 = Facts( industry='Creates your technology products, especially your cell phones', stock='Apple', )
+       u2 = Facts( industry='Creates computers, laptop software, and other products', stock='Microsoft', )
+       u3 = Facts( industry='Creates electric stock', stock='Tesla', )
+       u4 = Facts( industry='Creates American stock', stock='Ford', )
+       u5 = Facts( industry='Creates movies', stock='Disney', )
 
 
        facts = [u1, u2, u3, u4, u5]
